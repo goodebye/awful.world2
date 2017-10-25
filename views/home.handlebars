@@ -44,6 +44,18 @@
             </div>
         </div>
 	{{/each}}
+
+    <div id="pagination">
+        {{#if prevPage}}
+            <a href="/?page={{prevPage}}"> <<< </a>
+        {{/if}}
+
+        {{#if nextPage}}
+        <a href="/?page={{nextPage}}"> >>> </a>
+        {{/if}}
+
+
+    </div>
     </div>
     </body>
 </html>

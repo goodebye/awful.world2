@@ -62,10 +62,15 @@ User.register(new User({ username : adminUsername}), adminPassword, (err, user) 
 app.get('/', function(req, res) {
     if (req.isAuthenticated())  {
 
+        console.log("req query!!: " + req.query.page);
+
         if (!req.query.page) req.query.page = 1;
     
         Post.paginate({}, { sort: { updatedAt: -1 }, page: req.query.page, limit: mn.postsPerPage }).then(function (response) {
-            res.render('home', { posts: response.docs, currentPage : response.page, totalPages: response.pages, user: req.user });
+            let nextPage = (response.pages > 1 && response.pages > response.page) ? parseInt(response.page) + 1 : null;
+            let prevPage = (response.page > 1) ? response.page - 1 : null;
+
+            res.render('home', { posts: response.docs, prevPage: prevPage, nextPage: nextPage, user: req.user });
     }).catch(function(err) { console.log(err) });;
     }
     else {

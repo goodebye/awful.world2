@@ -30,6 +30,11 @@ button {
     padding: 15px;
 }
 
+#pagination {
+    text-align: center;
+    margin: 0 auto;
+}
+
 .highlight {
     background-color: #fff;
     color: #000;
