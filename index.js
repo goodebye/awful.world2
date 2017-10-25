@@ -182,13 +182,20 @@ app.get('/invite/:invite_id', function(req, res) {
     });
 });
 
-app.get('/editprofile', isLoggedIn, function(req, res) {
-    res.render('editprofile', { user: user });    
+app.get('/edit-profile', isLoggedIn, function(req, res) {
+    res.render('edit-profile', { user: req.user });    
 });
 
-app.post('editprofile', isLoggedIn, function(req, res) {
-    User.update({_id: req.user._id}, { set: { profile: req.body.profile }}, function(err, user) {
-        res.redirect('/profile');
+app.post('/edit-profile', isLoggedIn, function(req, res) {
+    console.log("profile attempt: ", req.body.profile);
+    User.update({_id: req.user._id}, { $set: { profile: req.body.profile }}, function(err, user) {
+        if (user) {
+            console.log("profile!!!: " + req.user._id);
+            res.redirect(`/${req.user.username}`);
+        }
+        else {
+            res.redirect('/40fucking4');
+        }
     });
 });
 

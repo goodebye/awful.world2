@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
     <head>
     </head>
@@ -7,11 +8,7 @@
         </h1>
         <div id="profile">
             {{#if canEdit}}
-                <form id="invite" action="/editprofile" method="get">
-                    <div class="err"> {{error}} </div>
-                    <input type="submit" value="edit">
-                </form>
-            {{/if}}
+                            {{/if}}
             {{{profileUser.profile}}}
         </div>
        {{#each posts}}
