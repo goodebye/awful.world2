@@ -35,8 +35,13 @@ button {
     color: #000;
 }
 
+.post-header .highlight {
+}
+
 #logo {
     float: left;
+    font-size: 30px;
+    padding: 5px;
 }
 
 #post-button {
@@ -65,6 +70,12 @@ button {
     background-color: #000;
     color: #fff;
     text-align: center;
-    padding: 10px;
 }
 
+ul {
+    list-style: none;
+}
+
+li {
+    width: 500px;
+}

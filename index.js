@@ -88,6 +88,10 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/', failur
     });
 });
 
+app.get('/settings', isLoggedIn, function(req, res) {
+    res.render('settings', {user: req.user});
+});
+
 app.post('/invite/register', (req, res) => {
     if (req.body.invite_id) {
         Invite.findById(req.body.invite_id, function(err, invite) {
@@ -157,7 +161,7 @@ app.post('/invite/create', isLoggedIn, function(req, res) {
         if (err) return console.error(err);
         else {
             User.update({_id: req.user._id}, { $push: { invites: invite}}, function(err, user) {
-                res.redirect('/');
+                res.redirect('/settings');
             });
        }
     });
@@ -166,8 +170,7 @@ app.post('/invite/create', isLoggedIn, function(req, res) {
 app.get('/invite/:invite_id', function(req, res) {
     Invite.findOne({_id: req.params.invite_id}).exec(function  (err, invite) {
         if (!err && invite) {
-            if (req.user) {
-                res.redirect('/');
+            if (req.user) { res.redirect('/');
             }
             else {
                 res.render('signup', {invite_id:  req.params.invite_id}); 
@@ -179,13 +182,26 @@ app.get('/invite/:invite_id', function(req, res) {
     });
 });
 
+app.get('/editprofile', isLoggedIn, function(req, res) {
+    res.render('editprofile', { user: user });    
+});
+
+app.post('editprofile', isLoggedIn, function(req, res) {
+    User.update({_id: req.user._id}, { set: { profile: req.body.profile }}, function(err, user) {
+        res.redirect('/profile');
+    });
+});
+
 app.get('/:username', isLoggedIn, function(req, res) {
     User.findOne({username: req.params.username}).exec(function (err, user) {
         if (!err && user) {
             Post.find({username: user.username}).sort({updatedAt: '-1'}).limit(mn.postsPerPage).exec(function (err, posts) {
                 if (!err) {
-                    console.log(posts);
-                    res.render('profile', {posts: posts, user: req.user, profileUser: user});
+                    let canEdit = (req.user._id.equals( user._id)) ? true : false;
+                    console.log(req.user._id, user._id);
+                    console.log("can edit: " + canEdit + "\n");
+
+                    res.render('profile', {posts: posts, user: req.user, profileUser: user, canEdit: canEdit});
                 }
                 else {
                     console.log("wtf!!!!")

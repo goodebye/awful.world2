@@ -32,18 +32,20 @@
 
         </div>
     <div id='most-things'>
-	{{#each posts}}
-		<div class="post" id="{{username}}/{{_id}}">
-		    <div class="post-header">
-                <span class="highlight">&nbsp;&nbsp;<a href="/{{username}}/{{_id}}">a post</a> by @<a href="/{{username}}">{{username}}</a>&nbsp;&nbsp;
-                </span>
-             </div>
-		
-            <div class="post-inside">
-                {{{post}}}
-            </div>
-        </div>
-	{{/each}}
+        
+        <form id="invite" action="invite/create" method="post">
+        <div class="err"> {{error}} </div>
+        <input type="submit" value="invite">
+        </form>
+
+        <ul id='invites'>
+            <span>copy+paste these to someone you trust</span>
+            {{#each user.invites}}
+                <li>
+                    <input value=http://awful.world/invite/{{this}}>
+                </li>
+            {{/each}}
+        </ul>
     </div>
     </body>
 </html>
