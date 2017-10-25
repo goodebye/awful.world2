@@ -1,7 +1,6 @@
 body {
     font-family: Arial;
     font-size: 1em;
-    background-image: url("/pix/star_tex.png");
     background-repeat: repeat;
 }
 
@@ -10,73 +9,62 @@ button {
 }
 
 #most-things {
-    min-width: 1000px;
+    min-width: 800px;
     width: 80%;
     margin: 0 auto;
+    padding-top: 60px
 }
 
 #header-garbage {
+    display: inline-block;
     text-align: center;
-    margin: 0 auto;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-style: solid;
+    width: 100%;
+    background-color: #000;
 }
 
-#login-button {
-    margin: 10px;
-    padding: 10px 40px;
+.padthismf {
+    padding: 15px;
 }
 
-.error-text {
+.highlight {
     background-color: #fff;
-    width: 400px; 
-    margin: 0 auto;
-    color: #ff0000;
+    color: #000;
 }
 
-#mirage {
-    background-color: #fff;
-    padding: 10px;
-    cursor: pointer;
+#logo {
+    float: left;
 }
 
-#login {
-    margin: 20px;
+#post-button {
+    float: right;
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+
+#profile-link {
+    float: right;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .post {
+    background-color: #fff;
     border-style: solid;
-    border-width: 3px;
+    border-width: 2px;
     border-color: #000;
     padding: 5px;
     margin: 10px;
 }
 
-#emblem {
+.post-header {
+    background-color: #000;
+    color: #fff;
     text-align: center;
-    margin: 0 auto;
-    padding-top: 10%;
-    margin-bottom: 0px;
-    height: 560px;
-    position: relative;
-}
-
-#awfultext {
-    bottom: 560px;;
-    margin-bottom: -560px;
-    position: relative;
-}
-
-#globe {
-}
-
-
-#login-toggle {
-    text-align: center;
-    margin: 0 auto;
-}
-
-#login-zone {
-    visibility:hidden;
-    text-align: center;
-    margin: 0 auto;
+    padding: 10px;
 }
 

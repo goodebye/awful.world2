@@ -7,33 +7,42 @@
     </head>
     <body>
     <div id="header-garbage">
-	<h1>
-	    <a href="/">awful.world</a>
-	</h1>
-	<h3>
-	    <a href="/post">post!</a>
-	</h3>
-	<h5>
-	    hey @<a href="/{{user.username}}">{{user.username}}</a>
-	    (<a href="/logout">logout</a>)               
-	</h5>
-        <form id="invite" action="invite/create" method="post">
+        <div id="logo" class="padthismf highlight">
+            <a href="/">awful.world</a>
+        </div>
+        <div id="post-button" class="padthismf highlight">
+            <a href="/post">post</a>
+        </div>
+        <div id="profile-link" class="padthismf highlight">
+            hey @<a href="/{{user.username}}">{{user.username}}</a>
+            &nbsp;
+            <a href="/settings">⚙</a>
+            &nbsp;
+            (<a href="/logout">logout</a>)               
+        </div>
+<!--        <form id="invite" action="invite/create" method="post">
             <div class="err"> {{error}} </div>
             <input type="submit" value="invite">
         </form>
 
-	{{#each user.invites}}
-	    {{this}}&nbsp;
-	{{/each}}
-    </div>
+        {{#each user.invites}}
+            {{this}}&nbsp;
+        {{/each}}
+-->
 
+        </div>
     <div id='most-things'>
 	{{#each posts}}
 		<div class="post" id="{{username}}/{{_id}}">
-		    <div class="post-header"><a href="/{{username}}/{{_id}}">a post</a> by @<a href="/{{username}}">{{username}}</a></div>
-		<div class="post-inside">
-		    {{{post}}}
-		</div>
+		    <div class="post-header">
+                <span class="highlight"><a href="/{{username}}/{{_id}}">a post</a> by @<a href="/{{username}}">{{username}}</a>
+                </span>
+             </div>
+		
+            <div class="post-inside">
+                {{{post}}}
+            </div>
+        </div>
 	{{/each}}
     </div>
     </body>
