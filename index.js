@@ -53,9 +53,9 @@ const adminUsername = process.env.ADMIN_USER || ss.adminUsername;
 const adminPassword = process.env.ADMIN_PASS || ss.adminPassword; 
 
 User.register(new User({ username : adminUsername}), adminPassword, (err, user) => {
-                    if (err) {
-                        console.log(err);
-                    }
+    if (err) {
+	console.log(err);
+    }
 });
  
 
@@ -74,7 +74,7 @@ app.get('/', function(req, res) {
         if (req.query.nicetry) {
             error = "you aren't allowed to do that!! not logged in!!!"
         }
-        res.render('home', { error: error });
+        res.render('landing', { error: error });
     }
 });
 

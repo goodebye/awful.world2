@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/css/home.css">
+        <link rel="shortcut icon" type="image/png" href="/pix/favicon2.png"/>
+        <title>awful.world</title>
+    </head>
+    <body>
+           <div id='most-things'>
+                <div id='emblem'>
+                    <div id="globe">
+                        <img src='/pix/globe.png' alt="a pixelated, crude digital painting of the earth with 'awful world' spray painted on top of it in blood red" />
+                    </div> <div id="awfultext">
+                        <img src='/pix/awfultext.png' alt="a pixelated, crude digital painting of the earth with 'awful world' spray painted on top of it in blood red" />
+                     <div id="login-toggle">
+                        <h4>{{error}}</h4>
+                        <a href="#" id="mirage" onClick="showLoginZone()">THIS IS A MIRAGE</a>
+
+                    <div id="login-zone">
+                        <form id="login" action="login" method="post">
+                            <input name="username" id="post-content" placeholder="username">
+                            <br />
+                            <input name="password" type="password" placeholder="password">
+                            <br />
+                            <input id="login-button" type="submit" value=":-)">
+                        </form>
+                    </div>
+     
+
+                    </div> 
+                </div>
+               
+           </div>
+
+            <script>
+
+                function map(n, start1, stop1, start2, stop2) {
+                    //stolen from p5.js
+                    return ((n - start1)/(stop1 - start1)) * (stop2 - start2) + start2;
+                };
+
+                document.onmousemove = function(e) {
+                    const awfultext = document.getElementById("awfultext");
+
+                    const globe = document.getElementById("globe");
+                    const halfw = document.body.clientWidth / 2; 
+                    const halfh = document.body.clientHeight / 2;
+                    const scale = .05;
+                    const globescale = 0.5;
+                    const bgscale = 0.01
+                    
+                    const padL = map(e.clientX, 0, document.body.clientWidth / 2, -halfw * scale, halfw * scale);
+                    const padT = map(e.clientY, 0, document.body.clientHeight / 2, -halfh * scale, halfh * scale) + halfh * scale;;
+
+                    document.body.style.backgroundPosition = `${padL * bgscale}% ${padT * bgscale}%`;
+
+                    awfultext.style.margin = `${-padT * globescale + halfh * scale}px 0px -560px ${-padL*globescale}px`;
+
+                    globe.style.margin = `${-padT +halfh*scale}px 0px 0px ${-padL}px`;
+                }
+
+                function showLoginZone() {
+                    document.getElementById("login-zone").style.visibility = "visible";
+                }
+            </script>
+    </body>
+</html>
