@@ -17,6 +17,7 @@
                 {{user.username}}
             </h1>
             <div id="profile">
+                {{{user.profile}}}
            <!-- fix this!!! 
            {{#each posts}}
                 <div class="post" id="{{username}}/{{_id}}">
@@ -38,7 +39,7 @@
         <script>
             var editor = ace.edit("editor");
             //editor.setTheme("ace/theme/monokai");
-            ace.setValue(`{{{user.profile}}}`);
+            editor.setValue(`{{{user.profile}}}`);
             editor.getSession().setMode("ace/mode/html");
 
            function updatePreview() {
