@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/css/home.css">
+        <link rel="shortcut icon" type="image/png" href="/pix/favicon2.png"/>
+        <title>awful.world</title>
+    </head>
+    <body>
+        {{#if user}}
+            <div id="header-garbage">
+                <h1>
+                    <a href="/">awful.world</a>
+                </h1>
+                <h3>
+                    <a href="/post">post!</a>
+                </h3>
+                <h5>
+                    hey @<a href="/{{user.username}}">{{user.username}}</a>
+                    (<a href="/logout">logout</a>)               
+                </h5>
+                    <form id="invite" action="invite/create" method="post">
+                        <div class="err"> {{error}} </div>
+                        <input type="submit" value="invite">
+                    </form>
+
+                {{#each user.invites}}
+                    {{this}}&nbsp;
+                {{/each}}
+            </div>
+
+            <div id='most-things'>
+                {{#each posts}}
+                <div class="post" id="{{username}}/{{_id}}">
+                    <div class="post-header"><a href="/{{username}}/{{_id}}">a post</a> by @<a href="/{{username}}">{{username}}</a></div>
+                        <div class="post-inside">
+                            {{{post}}}
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        {{else}}
+            <div id='most-things'>
+                <div id='emblem'>
+                    <img src='/pix/emblem.png' alt="a pixelated, crude digital painting of the earth with 'awful world' spray painted on top of it in blood red" />
+                    <div id="login-toggle">
+                        <h4>{{error}}</h4>
+                        <button onClick="showLoginZone()">'this is a mirage'</button>
+                    </div>
+                </div>
+
+                <div id="login-zone">
+                    <form id="login" action="login" method="post">
+                        <label for="login">login</label>
+                        <input name="username" id="post-content" placeholder="username">
+                        <input name="password" type="password" placeholder="password">
+                        <input type="submit" value=":-)">
+                    </form>
+               </div>
+            </div>
+
+            <script>
+
+                function map(n, start1, stop1, start2, stop2) {
+                    //stolen from p5.js
+                    return ((n - start1)/(stop1 - start1)) * (stop2 - start2) + start2;
+                };
+
+                document.onmousemove = function(e) {
+                    const awfultext = document.getElementById("emblem");
+                    const halfw = document.width / 2; 
+                    console.log(e);
+                    
+                    awfultext.style.padding = ``;
+                }
+
+                function showLoginZone() {
+                    document.getElementById("login-zone").style.visibility = "visible";
+                }
+            </script>
+
+
+        {{/if}}
+    </body>
+</html>

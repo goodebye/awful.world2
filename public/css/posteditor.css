@@ -1,0 +1,35 @@
+#editor { 
+    top: 0;
+    right: 0;
+    width:100%;
+    height:96%;
+}
+
+#toggle-visibility {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+}
+
+#left-half {
+    position: absolute;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 50%;
+}
+
+#post-preview {
+    position: absolute;
+    overflow: scroll;
+   /* border-style: solid;
+    border-width: 1px;
+    border-color: #000; */
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 50%;
+}

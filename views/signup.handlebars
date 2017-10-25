@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/css/posteditor.css">
+        <title>create post</title>
+    </head>
+    <body>
+        <form id="register" action="/invite/register" method="post">
+            <div class="err"> {{error}} </div>
+            <label for="signup">signup</label>
+            <input name="username" id="post-content" placeholder="username">
+            <input name="password" type="password" placeholder="password">
+            <input name="invite_id" type="hidden" value="{{invite_id}}">
+            <input type="submit" value=":-)">
+
+        </form>
+    </body>
+</html>

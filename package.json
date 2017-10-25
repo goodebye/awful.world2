@@ -1,0 +1,33 @@
+{
+  "name": "awful.world",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "handlebars": "^4.0.11",
+    "lorem-ipsum": "^1.0.4",
+    "mongodb": "^2.2.33",
+    "mongoose": "^4.12.4",
+    "mongoose-paginate": "^5.0.3",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "heroku-cli": "^6.14.36",
+    "lorem-ipsum": "^1.0.4"
+  }
+}

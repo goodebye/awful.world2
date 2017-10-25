@@ -1,0 +1,73 @@
+body {
+    font-family: Arial;
+    font-size: 1em;
+    background-image: url("/pix/star_tex.png");
+    background-repeat: repeat;
+}
+
+button {
+    font-size: 1em;
+}
+
+#most-things {
+    min-width: 1000px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#header-garbage {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#login-button {
+    margin: 10px;
+    padding: 10px 40px;
+}
+
+#mirage {
+    background-color: #fff;
+    padding: 10px;
+}
+
+#login {
+    margin: 20px;
+}
+
+.post {
+    border-style: solid;
+    border-width: 3px;
+    border-color: #000;
+    padding: 5px;
+    margin: 10px;
+}
+
+#emblem {
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 10%;
+    margin-bottom: 0px;
+    height: 560px;
+    position: relative;
+}
+
+#awfultext {
+    bottom: 560px;;
+    position: relative;
+}
+
+#globe {
+}
+
+
+#login-toggle {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#login-zone {
+    visibility:hidden;
+    text-align: center;
+    margin: 0 auto;
+}
+

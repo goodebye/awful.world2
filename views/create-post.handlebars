@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/css/posteditor.css">
+        <title>create post</title>
+    </head>
+    <body>
+
+        <div id="left-half">
+                <div id="editor"></div> 
+                <button type="button" value="post it" onclick="postIt()">post it</button>
+                <button type="button" value="update" onclick="updatePreview()">update preview</button>
+        </div>
+
+        <div id="post-preview">
+        </div>
+
+        <button id="toggle-visibility" onclick="toggleEditor()">t<br/>o<br/>g<br/>g<br/>l<br/>e</button>
+
+        <script src="/js/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/ace-mode-html.js" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+            var editor = ace.edit("editor");
+            //editor.setTheme("ace/theme/monokai");
+            editor.getSession().setMode("ace/mode/html");
+
+           function updatePreview() {
+                document.getElementById("post-preview").innerHTML = editor.getValue();
+                var arr = document.getElementById("post-preview").getElementsByTagName('script')
+                for (var n = 0; n < arr.length; n++) {
+                    console.log(arr);
+                    eval(arr[n].innerHTML)//run script inside div
+                }
+            }
+
+            function toggleEditor() {
+                console.log("hi");
+                if (document.getElementById("left-half").style.display == "none") {
+                    document.getElementById("left-half").style.display = "initial";
+                    // document.getElementById("toggle-visibility").innerHTML = "<";
+                    document.getElementById("toggle-visibility").style.left = "50%";
+                    document.getElementById("post-preview").style.width = "50%";
+                }
+                else {
+                    document.getElementById("left-half").style.display = "none";
+                    document.getElementById("toggle-visibility").style.left = "0%";
+                    document.getElementById("post-preview").style.width = "100%";
+                    // document.getElementById("toggle-visibility").innerHTML = ">";
+                }
+            }
+
+            function postIt() {
+                method = "post"; // Set method to post by default if not specified.
+
+                params = {
+                   post: editor.getValue()
+                }
+                path = "/post";
+
+                // The rest of this code assumes you are not using a library.
+                // It can be made less wordy if you use one.
+                var form = document.createElement("form");
+                form.setAttribute("method", method);
+                form.setAttribute("action", path);
+
+                for(var key in params) {
+                    if(params.hasOwnProperty(key)) {
+                        var hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", key);
+                        hiddenField.setAttribute("value", params[key]);
+
+                        form.appendChild(hiddenField);
+                    }
+                }
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+
+            updatePreview();
+        </script>
+    </body>
+</html>
