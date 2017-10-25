@@ -25,9 +25,17 @@ button {
     padding: 10px 40px;
 }
 
+.error-text {
+    background-color: #fff;
+    width: 400px; 
+    margin: 0 auto;
+    color: #ff0000;
+}
+
 #mirage {
     background-color: #fff;
     padding: 10px;
+    cursor: pointer;
 }
 
 #login {
@@ -53,6 +61,7 @@ button {
 
 #awfultext {
     bottom: 560px;;
+    margin-bottom: -560px;
     position: relative;
 }
 

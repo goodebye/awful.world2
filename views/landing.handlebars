@@ -13,8 +13,11 @@
                     </div> <div id="awfultext">
                         <img src='/pix/awfultext.png' alt="a pixelated, crude digital painting of the earth with 'awful world' spray painted on top of it in blood red" />
                      <div id="login-toggle">
-                        <h4>{{error}}</h4>
-                        <a href="#" id="mirage" onClick="showLoginZone()">THIS IS A MIRAGE</a>
+                        <br/>
+                        <div class="error-text">{{error}}</div>
+                        <br/>
+                        <br/>
+                        <a role="button" id="mirage" onClick="showLoginZone()">THIS IS A MIRAGE</a>
 
                     <div id="login-zone">
                         <form id="login" action="login" method="post">
@@ -60,7 +63,14 @@
                 }
 
                 function showLoginZone() {
-                    document.getElementById("login-zone").style.visibility = "visible";
+		    const currentVis = document.getElementById("login-zone").style.visibility;
+
+                    if (currentVis === "visible") {
+                        document.getElementById("login-zone").style.visibility = "hidden"; 
+                    }
+                    else {
+                        document.getElementById("login-zone").style.visibility = "visible"; 
+                    }
                 }
             </script>
     </body>
