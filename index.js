@@ -239,13 +239,13 @@ app.get('/invite/:invite_id', function(req, res) {
             }
         }
         else {
-            res.redirect('/40fucking4');
+          res.redirect('/40fucking4');
         }
     });
 });
 
 app.get('/edit-profile', isLoggedIn, function(req, res) {
-    res.render('edit-profile', { user: req.user });    
+    res.render('edit-profile', { user: req.user, editorProfile: req.user.profile.replace(/<\/script/ig, "<\\\/script")});    
 });
 
 app.post('/edit-profile', isLoggedIn, function(req, res) {
