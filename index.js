@@ -270,15 +270,13 @@ app.post('/edit-profile/update', isLoggedIn, function(req, res) {
 
 });
 
-app.get('/:username', isLoggedIn, function(req, res) {
+app.get('/:username', function(req, res) {
     User.findOne({username: req.params.username}).exec(function (err, user) {
         if (!err && user) {
             Post.find({username: user.username}).sort({updatedAt: '-1'}).limit(mn.postsPerPage).exec(function (err, posts) {
                 if (!err) {
-                    let canEdit = (req.user._id.equals( user._id)) ? true : false;
                     user.profile = req.query.preview ? user.profilePreview : user.profile
-                    console.log(user.profile);
-                    res.render('profile', {posts: posts, user: user, canEdit: canEdit});
+                    res.render('profile', {posts: posts, user: user});
                 }
                 else {
                     console.log("wtf!!!!")
@@ -292,7 +290,7 @@ app.get('/:username', isLoggedIn, function(req, res) {
 });
 
 
-app.get('/:username/:_id', isLoggedIn, function(req, res) {
+app.get('/:username/:_id', function(req, res) {
     Post.findOne({_id: req.params._id}).exec(function (err, post) {
         if (!err) {
             res.render('view-post', post);
