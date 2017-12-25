@@ -7,7 +7,10 @@ module.exports = function(mongoose) {
         active: {
             type: Boolean,
             required: true,
-            default: true
+            default: true,
+        },
+        invitedUserId: {
+            type: String,
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,

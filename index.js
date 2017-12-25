@@ -29,7 +29,7 @@ mongoose.Promise = global.Promise;
 
 // models
 const Post = require('./models/post')(mongoose);
-const User = require('./models/user')(mongoose);
+const User = require('./models/user');
 const Invite = require('./models/invite')(mongoose);
 
 const app = express();
@@ -37,7 +37,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({ secret: 'trulybad' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -52,7 +52,7 @@ app.set('view engine', 'handlebars');
 const adminUsername = process.env.ADMIN_USER || ss.adminUsername;
 const adminPassword = process.env.ADMIN_PASS || ss.adminPassword; 
 
-User.register(new User({ username : adminUsername}), adminPassword, (err, user) => {
+User.register(new User({ username : adminUsername, email: 'test@test.com'}), adminPassword, (err, user) => {
     if (err) {
 	console.log(err);
     }
@@ -61,17 +61,13 @@ User.register(new User({ username : adminUsername}), adminPassword, (err, user) 
 
 app.get('/', function(req, res) {
     if (req.isAuthenticated())  {
-
-        console.log("req query!!: " + req.query.page);
-
         if (!req.query.page) req.query.page = 1;
-    
-        Post.paginate({}, { sort: { updatedAt: -1 }, page: req.query.page, limit: mn.postsPerPage }).then(function (response) {
+        Post.paginate({published: true}, { sort: { updatedAt: -1 }, page: req.query.page, limit: mn.postsPerPage }).then(function (response) {
             let nextPage = (response.pages > 1 && response.pages > response.page) ? parseInt(response.page) + 1 : null;
             let prevPage = (response.page > 1) ? response.page - 1 : null;
 
             res.render('home', { posts: response.docs, prevPage: prevPage, nextPage: nextPage, user: req.user });
-    }).catch(function(err) { console.log(err) });;
+        }).catch(function(err) { console.log(err) });;
     }
     else {
         let error;
@@ -94,7 +90,9 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/', failur
 });
 
 app.get('/settings', isLoggedIn, function(req, res) {
-    res.render('settings', {user: req.user});
+    Post.find({user_id: req.user._id, published: false}, function(err, posts) {
+      res.render('settings', {user: req.user, drafts: posts});
+    });
 });
 
 app.post('/invite/register', (req, res) => {
@@ -108,6 +106,9 @@ app.post('/invite/register', (req, res) => {
 
                     invite.active = false;
                     invite.save((req, res) => { return });
+
+                    User.findOne({_id: userId}, (err, user) => {
+                    });
 
                     passport.authenticate('local')(req, res, () => {
                         req.session.save((err) => {
@@ -140,17 +141,62 @@ app.get('/logout', isLoggedIn, (req, res, next) => {
 });
 
 app.get('/post', isLoggedIn, function(req, res) {
-    res.render('create-post');
+    if (req.user) {
+      const newPost = new Post({ user_id: req.user._id, username: req.user.username });
+      
+      newPost.save((err) => {
+        if (err) {
+          console.log(err.message);
+          return;
+        }
+        res.redirect(`/post/${newPost._id}`);
+      });
+    }
+    else {
+      res.redirect('/?nicetry=1');
+    }
 });
 
-app.post('/post', isLoggedIn, function(req, res) {
-    if (req.user) {
-        const post = new Post({ user_id: req.user._id, username: req.user.username, post: req.body.post});
-        post.save(function(err, post) {
-            if (err) return console.error(err);
-            else res.redirect('/');
-        })
-    }
+app.get('/post/:post_id', isLoggedIn, function(req, res) {
+   Post.findById(req.params.post_id, function(err, post) {
+     if (err) {
+       return res.redirect('/40fucking4');
+     }
+     if (post.user_id == req.user._id) {
+        res.render('create-post', { post });
+     }
+     else {
+         // TODO: make this case, in which the user tries to edit someone else's post, better
+        res.redirect('/?nicetry=1?whatthefuck=2');
+     }
+   });
+});
+
+app.post('/post/:post_id', isLoggedIn, function(req, res) {
+   Post.findById(req.params.post_id, function(err, post) {
+     if (err) {
+        return req.redirect 
+     }
+     if (post.user_id == req.user._id) {
+        Post.update({_id: post._id}, { $set: { post: req.body.post, published: req.body.published, title: req.body.title }}, (err, raw) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+
+          if (JSON.parse(req.body.published)) {
+            res.redirect('/');
+          }
+          else {
+            res.redirect('/settings');
+          }
+        });
+     }
+     else {
+         // TODO: make this case, in which the user tries to edit someone else's post, better
+        res.redirect('/?nicetry=1?whatthefuck=2');
+     }
+   });
 });
 
 
@@ -160,16 +206,27 @@ app.get('/40fucking4', function(req, res) {
 
 app.post('/invite/create', isLoggedIn, function(req, res) {
     console.log("\n"+req.user._id)
-    const invite = new Invite({ userId: req.user._id });
+    if (req.user.remainingInvites > 0) {
+        console.log("creating invite!");
 
-    invite.save(function(err, invite) {
-        if (err) return console.error(err);
-        else {
-            User.update({_id: req.user._id}, { $push: { invites: invite}}, function(err, user) {
-                res.redirect('/settings');
-            });
-       }
-    });
+        const invite = new Invite({ userId: req.user._id });
+        
+        invite.save(function(err, invite) {
+            if (err) return console.error(err);
+            else {
+                console.log("did it");
+                User.update({_id: req.user._id}, { $push: { invites: invite}, $inc: { remainingInvites: -1}}, function(err, user) {
+                    if (err) {
+                        return res.redirect('/40fucking4');
+                    }
+                    res.redirect('/settings');
+                });
+           }
+        });
+    }
+    else {
+        res.redirect('/settings', {error: "out of invites!" });
+    }
 });
 
 app.get('/invite/:invite_id', function(req, res) {
@@ -204,16 +261,24 @@ app.post('/edit-profile', isLoggedIn, function(req, res) {
     });
 });
 
+app.post('/edit-profile/update', isLoggedIn, function(req, res) {
+    console.log("it's me bitch");
+    console.log(req.body.profilePreview);
+  User.update({_id: req.user._id}, { $set: { profilePreview: req.body.profilePreview }}, function(err, user) {
+      res.sendStatus(200);
+   });
+
+});
+
 app.get('/:username', isLoggedIn, function(req, res) {
     User.findOne({username: req.params.username}).exec(function (err, user) {
         if (!err && user) {
             Post.find({username: user.username}).sort({updatedAt: '-1'}).limit(mn.postsPerPage).exec(function (err, posts) {
                 if (!err) {
                     let canEdit = (req.user._id.equals( user._id)) ? true : false;
-                    console.log(req.user._id, user._id);
-                    console.log("can edit: " + canEdit + "\n");
-
-                    res.render('profile', {posts: posts, user: req.user, profileUser: user, canEdit: canEdit});
+                    user.profile = req.query.preview ? user.profilePreview : user.profile
+                    console.log(user.profile);
+                    res.render('profile', {posts: posts, user: user, canEdit: canEdit});
                 }
                 else {
                     console.log("wtf!!!!")

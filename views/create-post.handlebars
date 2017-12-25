@@ -7,12 +7,17 @@
     <body>
 
         <div id="left-half">
+            <div id="title-container"><input value="{{post.title}}" id="title" placeholder="your title here"></input></div>
                 <div id="editor"></div> 
-                <button type="button" value="post it" onclick="postIt()">post it</button>
+                <button type="button" value="post it" onclick="postIt(true)">post it</button>
+                <button type="button" value="save draft" onclick="postIt(false)">save draft</button>
                 <button type="button" value="update" onclick="updatePreview()">update preview</button>
+
+                <span id="post-id">post id: {{post._id}}</span>
         </div>
 
         <div id="post-preview">
+            <iframe id="preview-iframe"></iframe>
         </div>
 
         <button id="toggle-visibility" onclick="toggleEditor()">t<br/>o<br/>g<br/>g<br/>l<br/>e</button>
@@ -22,19 +27,15 @@
 
         <script>
             var editor = ace.edit("editor");
-            //editor.setTheme("ace/theme/monokai");
+
             editor.getSession().setMode("ace/mode/html");
+            editor.setValue(`{{{post.post}}}`);
 
            function updatePreview() {
-                document.getElementById("post-preview").innerHTML = editor.getValue();
-                var arr = document.getElementById("post-preview").getElementsByTagName('script')
-                for (var n = 0; n < arr.length; n++) {
-                    console.log(arr);
-                    eval(arr[n].innerHTML)//run script inside div
-                }
+                document.getElementById('preview-iframe').srcdoc = editor.getValue();
             }
 
-            function toggleEditor() {
+                       function toggleEditor() {
                 console.log("hi");
                 if (document.getElementById("left-half").style.display == "none") {
                     document.getElementById("left-half").style.display = "initial";
@@ -50,13 +51,15 @@
                 }
             }
 
-            function postIt() {
+            function postIt(publish) {
                 method = "post"; // Set method to post by default if not specified.
 
                 params = {
-                   post: editor.getValue()
+                   post: editor.getValue(),
+                   published: publish,
+                   title: document.getElementById('title').value
                 }
-                path = "/post";
+                path = "/post/{{post._id}}";
 
                 // The rest of this code assumes you are not using a library.
                 // It can be made less wordy if you use one.

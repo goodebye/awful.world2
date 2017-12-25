@@ -7,35 +7,26 @@
     </head>
     <body>
     <div id="header-garbage">
-        <div id="logo" class="padthismf highlight">
-            <a href="/">🌎</a>
+        <div id="logo" class="padthismf">
+            <a href="/">🌎awful.world</a>
         </div>
-        <div id="post-button" class="padthismf highlight">
+        <div id="post-button" class="padthismf">
             <a href="/post">post</a>
         </div>
-        <div id="profile-link" class="padthismf highlight">
+        <div id="profile-link" class="padthismf">
             @<a href="/{{user.username}}">{{user.username}}</a>
             &nbsp;
-            <a href="/settings">⚙</a>
+            <a href="/settings">dashboard</a>
             &nbsp;
-            <a href="/logout">🚪</a>               
+            <a href="/logout">logout</a>               
         </div>
-<!--        <form id="invite" action="invite/create" method="post">
-            <div class="err"> {{error}} </div>
-            <input type="submit" value="invite">
-        </form>
+    </div>
 
-        {{#each user.invites}}
-            {{this}}&nbsp;
-        {{/each}}
--->
-
-        </div>
     <div id='most-things'>
 	{{#each posts}}
 		<div class="post" id="{{username}}/{{_id}}">
 		    <div class="post-header">
-                <span class="highlight">&nbsp;&nbsp;<a href="/{{username}}/{{_id}}">a post</a> by @<a href="/{{username}}">{{username}}</a>&nbsp;&nbsp;
+                <span class="highlight">&nbsp;&nbsp;<a href="/{{username}}/{{_id}}">{{title}}</a> by @<a href="/{{username}}">{{username}}</a> <a href="/report/{{_id}}">⚐</a>
                 </span>
              </div>
 		
@@ -53,8 +44,6 @@
         {{#if nextPage}}
         <a href="/?page={{nextPage}}"> >>> </a>
         {{/if}}
-
-
     </div>
     </div>
     </body>

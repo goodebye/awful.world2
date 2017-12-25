@@ -8,30 +8,17 @@
 
         <div id="left-half">
                 <div id="editor"></div> 
-                <button type="button" value="" onclick="postIt()">post it</button>
+                <button type="button" value="" onclick="postIt()">save it</button>
                 <button type="button" value="update" onclick="updatePreview()">update preview</button>
         </div>
+
         <div id="post-preview">
- 
-            <h1>
-                {{user.username}}
-            </h1>
-            <div id="profile">
-                {{{user.profile}}}
-           <!-- fix this!!! 
-           {{#each posts}}
-                <div class="post" id="{{username}}/{{_id}}">
-                    <div class="post-header"><a href="/{{username}}/{{_id}}">a post</a> by @<a href="/{{username}}">{{username}}</a></div>
-                        <div class="post-inside">
-                            {{{post}}}
-                        </div>
-                    </div>
-                    {{/each}}-->
-            </div>
+            <iframe id="preview-iframe" src="/{{user.username}}"></iframe>
         </div>
-       </body>
 
         <button id="toggle-visibility" onclick="toggleEditor()">t<br/>o<br/>g<br/>g<br/>l<br/>e</button>
+
+
 
         <script src="/js/ace.js" type="text/javascript" charset="utf-8"></script>
         <script src="/js/ace-mode-html.js" type="text/javascript" charset="utf-8"></script>
@@ -43,16 +30,44 @@
             editor.getSession().setMode("ace/mode/html");
 
            function updatePreview() {
-                document.getElementById("profile").innerHTML = editor.getValue();
-                var arr = document.getElementById("profile").getElementsByTagName('script')
-                for (var n = 0; n < arr.length; n++) {
-                    console.log(arr);
-                    eval(arr[n].innerHTML)//run script inside div
-                }
-            }
+               console.log("hey");
+              var XHR = new XMLHttpRequest();
+              var urlEncodedData = "";
+              var urlEncodedDataPairs = [];
+              var name;
+
+               var data = { profilePreview: editor.getValue() }
+
+              // Turn the data object into an array of URL-encoded key/value pairs.
+              for(name in data) {
+                urlEncodedDataPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+              }
+
+              // Combine the pairs into a single string and replace all %-encoded spaces to
+              // the '+' character; matches the behaviour of browser form submissions.
+              urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+
+              // Define what happens on successful data submission
+              XHR.onload = function(event) {
+                  document.getElementById('preview-iframe').src = `/{{user.username}}?preview=1`;
+              };
+
+              // Define what happens in case of error
+              XHR.addEventListener('error', function(event) {
+                console.log('oops! something went wrong babe.');
+              });
+
+              // Set up our request
+              XHR.open('POST', '/edit-profile/update');
+
+              // Add the required HTTP header for form data POST requests
+              XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+              // Finally, send our data.
+              XHR.send(urlEncodedData);
+           }
 
             function toggleEditor() {
-                console.log("hi");
                 if (document.getElementById("left-half").style.display == "none") {
                     document.getElementById("left-half").style.display = "initial";
                     // document.getElementById("toggle-visibility").innerHTML = "<";

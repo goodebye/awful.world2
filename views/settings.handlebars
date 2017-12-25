@@ -20,36 +20,37 @@
             &nbsp;
             <a href="/logout">🚪</a>               
         </div>
-<!--        <form id="invite" action="invite/create" method="post">
-            <div class="err"> {{error}} </div>
-            <input type="submit" value="invite">
-        </form>
-
-        {{#each user.invites}}
-            {{this}}&nbsp;
-        {{/each}}
--->
-
-        </div>
+    </div>
     <div id='most-things'>
-        <form id="invite" action="/edit-profile" method="get">
-            <input type="submit" value="edit profile">
-        </form>
+        <center>
+            you have {{user.remainingInvites}} invites remaining!
+           
+                {{#each user.invites}}
+                        <br/>
+                        <input value=http://awful.world/invite/{{this}}>
+                {{/each}}
 
-        
-        <form id="invite" action="invite/create" method="post">
-        <div class="err"> {{error}} </div>
-        <input type="submit" value="invite">
-        </form>
+            {{#if user.remainingInvites}}
+            <form id="invite" action="/invite/create" method="post">
+                <input type="submit" value="invite">
+            </form>
+            {{/if}}
 
-        <ul id='invites'>
-            <span>copy+paste these to someone you trust</span>
-            {{#each user.invites}}
-                <li>
-                    <input value=http://awful.world/invite/{{this}}>
-                </li>
-            {{/each}}
-        </ul>
+
+                   
+            <form id="invite" action="/edit-profile" method="get">
+                <input type="submit" value="edit profile">
+            </form>
+
+            
+            <div class='drafts'>
+                {{#each drafts}}
+                <a href="/post/{{this._id}}">{{this.title}}</a>
+                    <br/>
+                {{/each}}
+            </div>
+            <div class="err"> {{error}} </div>
+       </center>
     </div>
     </body>
 </html>

@@ -3,17 +3,10 @@
     <head>
     </head>
     <body>
-        <h1>
-            {{profileUser.username}}
-        </h1>
-        <div id="profile">
-            {{#if canEdit}}
-                            {{/if}}
-            {{{profileUser.profile}}}
-        </div>
-       {{#each posts}}
+        {{{user.profile}}}
+      {{#each posts}}
             <div class="post" id="{{username}}/{{_id}}">
-                <div class="post-header"><a href="/{{username}}/{{_id}}">a post</a> by @<a href="/{{username}}">{{username}}</a></div>
+                <div class="post-header"><a href="/{{username}}/{{_id}}">{{title}}</a> by @<a href="/{{username}}">{{username}}</a></div>
                     <div class="post-inside">
                         {{{post}}}
                     </div>
