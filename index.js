@@ -163,7 +163,9 @@ app.get('/post/:post_id', isLoggedIn, function(req, res) {
        return res.redirect('/40fucking4');
      }
      if (post.user_id == req.user._id) {
-        res.render('create-post', { post });
+         console.log(post.post);
+        const editorPost = post.post.replace(/<\/script/ig, "<\\\/script");    
+        res.render('create-post', { post, editorPost});
      }
      else {
          // TODO: make this case, in which the user tries to edit someone else's post, better

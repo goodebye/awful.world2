@@ -29,7 +29,7 @@
             var editor = ace.edit("editor");
 
             editor.getSession().setMode("ace/mode/html");
-            editor.setValue(`{{{post.post}}}`);
+            editor.setValue(`{{{editorPost}}}`);
 
            function updatePreview() {
                 document.getElementById('preview-iframe').srcdoc = editor.getValue();
