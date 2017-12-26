@@ -7,6 +7,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const flash = require('connect-flash');
 const mn = require('./magic_numbers.json');
+const MongoStore = require('connect-mongo')(session);
+
 let ss;
 
 if (process.env.mode != "PRODUCTION") {
@@ -37,10 +39,14 @@ const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(session({ secret: 'trulybad' }));
+app.use(session({
+    store: new MongoStore({ mongooseConnection: mongoose.connection}),
+    secret: 'truly bad',
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
 
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
@@ -98,6 +104,7 @@ app.get('/settings', isLoggedIn, function(req, res) {
             }
           });
       }
+
     });
 });
 
