@@ -40,6 +40,7 @@ button {
 
 .remove-link {
  color: #888888;
+ cursor: pointer;
  font-size: .6em;
 }
 
@@ -68,6 +69,3 @@ button {
 .drafts {
   text-align: center;
 }
-
-/* Clear floats after the columns */
-

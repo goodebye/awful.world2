@@ -63,7 +63,7 @@
                     {{#if drafts}}
 
                        {{#each drafts}}
-                        <a href="/post/{{this._id}}">{{this.title}}</a><sup><a class="remove-link" href="/post/{{this._id}}/delete">[x]</a></sup>
+                           <a href="/post/{{this._id}}">{{this.title}}</a><sup><a class="remove-link" onClick=deleteDraft("{{this._id}}")>[x]</a></sup>
                         <br/>
                        {{/each}}
                     {{else}}
@@ -76,5 +76,14 @@
         </div>
 
    </div>
+    <script>
+        function deleteDraft(postId) {
+            console.log("hey  ", postId);
+            let shouldDelete = confirm("are u rly truly sure u want to delete this draft?");
+            if (shouldDelete) { 
+                window.location.href = `/post/${postId}/delete`
+            }
+        }
+    </script>
     </body>
 </html>
