@@ -179,7 +179,7 @@ app.post('/post/:post_id', isLoggedIn, function(req, res) {
         return req.redirect 
      }
      if (post.user_id == req.user._id) {
-        Post.update({_id: post._id}, { $set: { post: req.body.post, published: req.body.published, title: req.body.title }}, (err, raw) => {
+        Post.update({_id: post._id}, { $set: { post: req.body.post, published: req.body.published, title: req.body.title || "untitled post" }}, (err, raw) => {
           if (err) {
             console.log(err);
             return;
