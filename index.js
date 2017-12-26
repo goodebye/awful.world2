@@ -91,8 +91,13 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/', failur
 
 app.get('/settings', isLoggedIn, function(req, res) {
     Post.find({user_id: req.user._id, published: false}, function(err, posts) {
-      console.log(posts);
-      res.render('settings', {user: req.user, drafts: posts});
+      if (!err) {
+          Invite.find({userId: req.user._id}, function(err, invites) {
+            if (!err) {
+                res.render('settings', {user: req.user, invites, drafts: posts});
+            }
+          });
+      }
     });
 });
 

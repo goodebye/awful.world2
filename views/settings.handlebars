@@ -47,9 +47,13 @@
 
                    <p>no invites remaining. maybe you'll get more someday.</p>
                 {{/if}}
-                    {{#each user.invites}}
-                        <p><input value=http://awful.world/invite/{{this}}></p>
-                    {{/each}}
+                
+                    {{#each invites}}
+                        {{#if this.active}}
+                        <p><input value=http://awful.world/invite/{{this._id}}>                        
+                        {{/if}}
+ </p>
+                   {{/each}}
 
 
             </div>
