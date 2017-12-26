@@ -91,6 +91,7 @@ app.post('/login', passport.authenticate('local', { failureRedirect: '/', failur
 
 app.get('/settings', isLoggedIn, function(req, res) {
     Post.find({user_id: req.user._id, published: false}, function(err, posts) {
+      console.log(posts);
       res.render('settings', {user: req.user, drafts: posts});
     });
 });
@@ -242,6 +243,25 @@ app.get('/invite/:invite_id', function(req, res) {
           res.redirect('/40fucking4');
         }
     });
+});
+
+app.get('/post/:post_id/delete', isLoggedIn, function(req, res) {
+  Post.findById(req.params.post_id, function(err, post) {
+      if (err) {
+        return res.redirect('/40fucking4');
+      }
+
+
+      if (req.user._id == post.user_id) {
+        // can delete post
+        post.remove();
+        res.redirect('/settings');
+      }
+
+      else {
+        res.redirect('/40fucking4');
+      }
+  });
 });
 
 app.get('/edit-profile', isLoggedIn, function(req, res) {

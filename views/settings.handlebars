@@ -45,7 +45,7 @@
             
             <div class='drafts'>
                 {{#each drafts}}
-                <a href="/post/{{this._id}}">{{this.title}}</a>
+                    <a href="/post/{{this._id}}">{{this.title}}</a><sup><a class="remove-link" href="/post/{{this._id}}/delete">[x]</a></sup>
                     <br/>
                 {{/each}}
             </div>

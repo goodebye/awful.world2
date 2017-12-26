@@ -65,3 +65,8 @@ ul {
 li {
     width: 500px;
 }
+
+.remove-link {
+ color: #888888;
+ font-size: .6em;
+}
