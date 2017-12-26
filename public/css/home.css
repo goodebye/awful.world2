@@ -45,10 +45,14 @@ button {
 }
 
 .report-link {
-  font-size: .7em;;
+  font-size: .6em;;
 }
 
 #logout-link {
+  font-size: .6em;
+}
+
+#alpha-sup {
   font-size: .6em;
 }
 
