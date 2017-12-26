@@ -101,8 +101,9 @@ app.post('/invite/register', (req, res) => {
         Invite.findById(req.body.invite_id, function(err, invite) {
             if (!err && invite && invite.active) {
                 User.register(new User({ username : req.body.username, inviteId: invite._id, email: req.body.email }), req.body.password, (err, user) => {
+                    console.log("hmm", user, err);
                     if (err) {
-                      return res.render('home', { error : err.message });
+                      return res.redirect(`/invite/${req.body.invite_id}/?error=${err.message}`);
                     }
 
                     invite.active = false;
@@ -235,7 +236,7 @@ app.get('/invite/:invite_id', function(req, res) {
             if (req.user) { res.redirect('/');
             }
             else {
-                res.render('signup', {invite_id:  req.params.invite_id}); 
+                res.render('signup', {invite_id:  req.params.invite_id, error: req.query.error.toLowerCase()}); 
             }
         }
         else {
