@@ -236,7 +236,8 @@ app.get('/invite/:invite_id', function(req, res) {
             if (req.user) { res.redirect('/');
             }
             else {
-                res.render('signup', {invite_id:  req.params.invite_id, error: req.query.error.toLowerCase()}); 
+                const errorMsg = req.query.error ? req.query.error.toLowerCase() : undefined;;
+                res.render('signup', {invite_id:  req.params.invite_id, error: errorMsg}); 
             }
         }
         else {
