@@ -293,7 +293,7 @@ app.post('/edit-profile/update', isLoggedIn, function(req, res) {
 app.get('/:username', function(req, res) {
     User.findOne({username: req.params.username}).exec(function (err, user) {
         if (!err && user) {
-            Post.find({username: user.username}).sort({updatedAt: '-1'}).limit(mn.postsPerPage).exec(function (err, posts) {
+            Post.find({username: user.username, published: true}).sort({updatedAt: '-1'}).limit(mn.postsPerPage).exec(function (err, posts) {
                 if (!err) {
                     user.profile = req.query.preview ? user.profilePreview : user.profile
                     res.render('profile', {posts: posts, user: user});
@@ -307,6 +307,10 @@ app.get('/:username', function(req, res) {
             res.redirect('/40fucking4');
         }
     });
+});
+
+app.get('/post/:post_id/report', function(req, res) {
+
 });
 
 
