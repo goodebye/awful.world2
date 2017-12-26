@@ -99,16 +99,13 @@ app.post('/invite/register', (req, res) => {
     if (req.body.invite_id) {
         Invite.findById(req.body.invite_id, function(err, invite) {
             if (!err && invite && invite.active) {
-                User.register(new User({ username : req.body.username, inviteId: invite._id}), req.body.password, (err, user) => {
+                User.register(new User({ username : req.body.username, inviteId: invite._id, email: req.body.email }), req.body.password, (err, user) => {
                     if (err) {
                       return res.render('home', { error : err.message });
                     }
 
                     invite.active = false;
                     invite.save((req, res) => { return });
-
-                    User.findOne({_id: userId}, (err, user) => {
-                    });
 
                     passport.authenticate('local')(req, res, () => {
                         req.session.save((err) => {
@@ -241,6 +238,7 @@ app.get('/invite/:invite_id', function(req, res) {
             }
         }
         else {
+            console.log(err);
           res.redirect('/40fucking4');
         }
     });
