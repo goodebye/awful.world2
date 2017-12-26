@@ -4,14 +4,30 @@
     </head>
     <body>
         {{{user.profile}}}
-      {{#each posts}}
-            <div class="post" id="{{username}}/{{_id}}">
-                <div class="post-header"><a href="/{{username}}/{{_id}}">{{title}}</a> by @<a href="/{{username}}">{{username}}</a></div>
-                    <div class="post-inside">
-                        {{{post}}}
-                    </div>
-                </div>
-            {{/each}}
+    <div id='main-container'>
+	{{#each posts}}
+		<div class="post" id="{{_id}}">
+		    <div class="post-header">
+                <span><a href="/{{username}}/{{_id}}">{{title}}</a> by <a href="/{{username}}">{{username}}</a> 
+                    <!-- <a class="report-link" href="/report/{{_id}}">⚐</a> -->
+                </span>
+             </div>
+		
+            <div class="post-inside">
+                {{{post}}}
+            </div>
         </div>
+	{{/each}}
+
+    <div id="pagination">
+        {{#if prevPage}}
+            <a href="/?page={{prevPage}}"> <<< </a>
+        {{/if}}
+
+        {{#if nextPage}}
+        <a href="/?page={{nextPage}}"> >>> </a>
+        {{/if}}
+    </div>
+         </div>
    </body>
 </html>

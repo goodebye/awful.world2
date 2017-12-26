@@ -11,22 +11,23 @@
             <a href="/">aw</a>
         </div>
         <div id="nav-links">
-            @<a href="/{{user.username}}">{{user.username}}</a>
+            @<a href="/{{user.username}}">{{user.username}}</a> 
+            <a href="/edit-profile">✎</a>
+            <a id="logout-link" href="/logout">(logout)</a>               
             &nbsp;
             <a href="/settings">dashboard</a>
-            &nbsp;
-            <a href="/logout">logout</a>               
             &nbsp;
             <a href="/post">post</a>
             &nbsp;
         </div>
-    </div>
+   </div>
 
     <div id='main-container'>
 	{{#each posts}}
 		<div class="post" id="{{_id}}">
 		    <div class="post-header">
-                <span><a href="/{{username}}/{{_id}}">{{title}}</a> by <a href="/{{username}}">{{username}}</a> <a href="/report/{{_id}}">⚐</a>
+                <span><a href="/{{username}}/{{_id}}">{{title}}</a> by <a href="/{{username}}">{{username}}</a> 
+                    <!-- <a class="report-link" href="/report/{{_id}}">⚐</a> -->
                 </span>
              </div>
 		

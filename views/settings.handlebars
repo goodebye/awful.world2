@@ -4,53 +4,77 @@
         <link rel="stylesheet" type="text/css" href="/css/home.css">
         <link rel="shortcut icon" type="image/png" href="/pix/favicon2.png"/>
         <title>awful.world</title>
+        <style>
+            body {
+                background-color: #000;
+                color: #fff;
+            }
+            a {
+              color: #fff;
+            }
+        </style>
     </head>
     <body>
-    <div id="header-garbage">
-        <div id="logo" class="padthismf highlight">
-            <a href="/">🌎</a>
+    <div id="navbar">
+        <div id="logo">
+            <a href="/">aw</a>
         </div>
-        <div id="post-button" class="padthismf highlight">
+        <div id="nav-links">
+            @<a href="/{{user.username}}">{{user.username}}</a> 
+            <a href="/edit-profile">✎</a>
+            <a id="logout-link" href="/logout">(logout)</a>               
+            &nbsp;
+            <a href="/settings">dashboard</a>
+            &nbsp;
             <a href="/post">post</a>
-        </div>
-        <div id="profile-link" class="padthismf highlight">
-            @<a href="/{{user.username}}">{{user.username}}</a>
             &nbsp;
-            <a href="/settings">⚙</a>
-            &nbsp;
-            <a href="/logout">🚪</a>               
         </div>
     </div>
-    <div id='most-things'>
-        <center>
-            you have {{user.remainingInvites}} invites remaining!
-           
-                {{#each user.invites}}
-                        <br/>
-                        <input value=http://awful.world/invite/{{this}}>
-                {{/each}}
 
-            {{#if user.remainingInvites}}
-            <form id="invite" action="/invite/create" method="post">
-                <input type="submit" value="invite">
-            </form>
-            {{/if}}
+    <div id='main-container'>
+        <div class="row">
+            <div class="column" id="invites-col">
+                <h1><i>INVITES</i></h1>
+               
+                {{#if user.remainingInvites}}
+                <form id="invite" action="/invite/create" method="post">
+                    <input type="image" name="submit" src="/pix/token.png" border="0" alt="Submit" />
+                </form>
+
+                you have {{user.remainingInvites}} invites remaining! click the token to generate an invite link.
+                {{else}}
+                   <img src="/pix/nomoretoken.png"/>
+
+                   <p>no invites remaining. maybe you'll get more someday.</p>
+                {{/if}}
+                    {{#each user.invites}}
+                        <p><input value=http://awful.world/invite/{{this}}></p>
+                    {{/each}}
 
 
-                   
-            <form id="invite" action="/edit-profile" method="get">
-                <input type="submit" value="edit profile">
-            </form>
-
-            
-            <div class='drafts'>
-                {{#each drafts}}
-                    <a href="/post/{{this._id}}">{{this.title}}</a><sup><a class="remove-link" href="/post/{{this._id}}/delete">[x]</a></sup>
-                    <br/>
-                {{/each}}
             </div>
-            <div class="err"> {{error}} </div>
-       </center>
-    </div>
+        <div class="column">
+            <center>
+            <div class="dash-header"><h1><i>DRAFTS</i></h1></div>
+            </center>
+                        
+                <div class='drafts'>
+                    {{#if drafts}}
+                       {{#each drafts}}
+                        <a href="/post/{{this._id}}">{{this.title}}</a><sup><a class="remove-link" href="/post/{{this._id}}/delete">[x]</a></sup>
+                        <br/>
+                       {{/each}}
+                    {{else}}
+                        <center>
+                            you don't have any drafts saved.
+                        </center>
+                    {{/if}}
+                </div>
+                <div class="err"> {{error}} </div>
+        </div>
+ 
+        </div>
+
+   </div>
     </body>
 </html>
