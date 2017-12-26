@@ -6,27 +6,27 @@
         <title>awful.world</title>
     </head>
     <body>
-    <div id="header-garbage">
-        <div id="logo" class="padthismf">
-            <a href="/">🌎awful.world</a>
+    <div id="navbar">
+        <div id="logo">
+            <a href="/">aw</a>
         </div>
-        <div id="post-button" class="padthismf">
-            <a href="/post">post</a>
-        </div>
-        <div id="profile-link" class="padthismf">
+        <div id="nav-links">
             @<a href="/{{user.username}}">{{user.username}}</a>
             &nbsp;
             <a href="/settings">dashboard</a>
             &nbsp;
             <a href="/logout">logout</a>               
+            &nbsp;
+            <a href="/post">post</a>
+            &nbsp;
         </div>
     </div>
 
-    <div id='most-things'>
+    <div id='main-container'>
 	{{#each posts}}
-		<div class="post" id="{{username}}/{{_id}}">
+		<div class="post" id="{{_id}}">
 		    <div class="post-header">
-                <span class="highlight">&nbsp;&nbsp;<a href="/{{username}}/{{_id}}">{{title}}</a> by @<a href="/{{username}}">{{username}}</a> <a href="/report/{{_id}}">⚐</a>
+                <span><a href="/{{username}}/{{_id}}">{{title}}</a> by <a href="/{{username}}">{{username}}</a> <a href="/report/{{_id}}">⚐</a>
                 </span>
              </div>
 		

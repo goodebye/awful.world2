@@ -4,14 +4,16 @@ body {
 button {
 }
 
-#most-things {
-    min-width: 800px;
-    width: 80%;
-    margin: 0 auto;
-    padding-top: 60px
+#main-container {
+    padding-top: 50px;
+    z-index: -1;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    position: absolute;
 }
 
-#header-garbage {
+#navbar {
     display: inline-block;
     text-align: center;
     position: absolute;
@@ -20,50 +22,21 @@ button {
     width: 100%;
 }
 
-.padthismf {
-}
-
 #pagination {
     text-align: center;
     margin: 0 auto;
-}
-
-.post-header .highlight {
 }
 
 #logo {
     float: left;
 }
 
-#post-button {
+#nav-links {
     float: right;
-    margin-left: 10px;
-    margin-right: 10px;
-
-}
-
-#profile-link {
-    float: right;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.post {
-   padding: 5px;
 }
 
 .post-header {
     text-align: center;
-    font-size: .8em;
-    color: #888888;
-}
-
-ul {
-    list-style: none;
-}
-
-li {
-    width: 500px;
 }
 
 .remove-link {
