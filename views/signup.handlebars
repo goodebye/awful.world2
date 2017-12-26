@@ -1,19 +1,69 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="/css/posteditor.css">
-        <title>create post</title>
+        <link rel="stylesheet" type="text/css" href="/css/signup.css">
+        <title>welcome to earth</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/p5.min.js" integrity="sha256-bXPU+HvtR3tP1IYHZVEFHzEZ9p5zkY8GLPnOnJXW67k=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.16/addons/p5.dom.js" integrity="sha256-B1ZM3gzk88A4V42oxOs8/tEGaiBqT0iClZVzFBeo3Ik=" crossorigin="anonymous"></script>
+        <script src="/js/clouds.js"></script>
     </head>
     <body>
-        <form id="register" action="/invite/register" method="post">
-            <div class="err"> {{error}} </div>
-            <label for="signup">signup</label>
-            <input name="username" id="post-content" placeholder="username">
-            <input name="email" id="post-content" placeholder="email">
-            <input name="password" type="password" placeholder="password">
-            <input name="invite_id" type="hidden" value="{{invite_id}}">
-            <input type="submit" value=":-)">
+        <div id="clouds"></div>
 
-        </form>
+        <div id="explication">
+            <div id="disclosure">
+               AWFUL.WORLD is a website that allows you unfettered access to the full gamut of the browser in your posts. as such, it is Very Experimental and has inherent risks. it is recommended to use your least favorite password, just in case. more details to follow in the handbook, post-registration.
+                 <form id="register" action="/invite/register" method="post">
+                    <div class="err"> {{error}} </div>
+                    </br>
+                    <input name="username" placeholder="username">
+                    </br>
+                    <input name="email" placeholder="email">
+                    </br>
+                    <input name="password" type="password" placeholder="password">
+                    </br>
+                    <input name="invite_id" type="hidden" value="{{invite_id}}">
+                    </br>
+                    <input type="submit" value=": )">
+                 </form>
+            </div>
+       </div>
+
+            <script>
+               function map(n, start1, stop1, start2, stop2) {
+                    //stolen from p5.js
+                    return ((n - start1)/(stop1 - start1)) * (stop2 - start2) + start2;
+                };
+
+                document.onmousemove = function(e) {
+                    const disclosureElement = document.getElementById("disclosure");
+
+                    const halfw = document.body.clientWidth / 2; 
+                    const halfh = document.body.clientHeight / 2;
+                    const scale = .05;
+                    const globescale = 0.5;
+                    const bgscale = 0.01
+                    
+                    const padL = map(e.clientX, 0, document.body.clientWidth / 2, -halfw * scale, halfw * scale);
+                    const padT = map(e.clientY, 0, document.body.clientHeight / 2, -halfh * scale, halfh * scale) + halfh * scale;;
+
+                    disclosureElement.style.margin = `${-padT * globescale + halfh * scale}px 0px 0px ${-padL*globescale}px`;
+
+//                    disclosureElement.style.margin = `${-padT +halfh*scale}px 0px 0px ${-padL}px`;
+
+                    // globe.style.margin = `${-padT +halfh*scale}px 0px 0px ${-padL}px`;
+                }
+
+                function showLoginZone() {
+		    const currentVis = document.getElementById("login-zone").style.visibility;
+
+                    if (currentVis === "visible") {
+                        document.getElementById("login-zone").style.visibility = "hidden"; 
+                    }
+                    else {
+                        document.getElementById("login-zone").style.visibility = "visible"; 
+                    }
+                }
+            </script>
     </body>
 </html>
