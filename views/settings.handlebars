@@ -59,15 +59,15 @@
             </center>
                         
                 <div class='drafts'>
+
                     {{#if drafts}}
+
                        {{#each drafts}}
                         <a href="/post/{{this._id}}">{{this.title}}</a><sup><a class="remove-link" href="/post/{{this._id}}/delete">[x]</a></sup>
                         <br/>
                        {{/each}}
                     {{else}}
-                        <center>
                             you don't have any drafts saved.
-                        </center>
                     {{/if}}
                 </div>
                 <div class="err"> {{error}} </div>

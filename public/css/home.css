@@ -65,5 +65,9 @@ button {
   text-align: center;
 }
 
+.drafts {
+  text-align: center;
+}
+
 /* Clear floats after the columns */
 
