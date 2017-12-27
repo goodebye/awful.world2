@@ -185,6 +185,17 @@ app.get('/post/:post_id', isLoggedIn, function(req, res) {
    });
 });
 
+app.get('/api/post/:post_id', function(req, res) {
+  Post.findById(req.params.post_id, function(err, post) {
+    if (err) {
+        console.log("error lol!!");
+        return res.json({ success: false, message: "post not found : (" });
+    }
+      console.log("i did it");;
+    res.json({success: true, post:  post.post});
+  });
+});
+
 app.post('/post/:post_id', isLoggedIn, function(req, res) {
    Post.findById(req.params.post_id, function(err, post) {
      if (err) {

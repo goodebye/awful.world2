@@ -29,13 +29,36 @@
             var editor = ace.edit("editor");
 
             editor.getSession().setMode("ace/mode/html");
-            editor.setValue(`{{{editorPost}}}`);
+
+            fetch('/api/post/{{post._id}}').then(function(res) {
+                if (res.status !== 200) {
+                    // error
+                    editor.setValue('res not 200: there was an error finding ur post. refresh or tweet at us ok?')
+                }
+                else {
+                    res.json().then(function(data) {
+                        if (data.success) {
+                             editor.setValue(data.post);
+                            console.log(data.post);
+                             updatePreviewWithString(data.post);
+                        }
+                    });
+                }
+            }).catch(function(err) {
+                console.log(err, "um");
+                editor.setValue('there was an error finding ur post. refresh or tweet at us ok?');
+            });
+                
 
            function updatePreview() {
                 document.getElementById('preview-iframe').srcdoc = editor.getValue();
+           }
+
+            function updatePreviewWithString(htmlString) {
+                document.getElementById('preview-iframe').srcdoc = htmlString;
             }
 
-                       function toggleEditor() {
+           function toggleEditor() {
                 console.log("hi");
                 if (document.getElementById("left-half").style.display == "none") {
                     document.getElementById("left-half").style.display = "initial";
@@ -81,8 +104,6 @@
                 document.body.appendChild(form);
                 form.submit();
             }
-
-            updatePreview();
         </script>
     </body>
 </html>
