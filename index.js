@@ -7,6 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const flash = require('connect-flash');
 const mn = require('./magic_numbers.json');
+const sslRedirect = require('heroku-ssl-redirect');
 const MongoStore = require('connect-mongo')(session);
 
 let ss;
@@ -46,6 +47,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(sslRedirect());
 
 
 passport.use(new LocalStrategy(User.authenticate()));
