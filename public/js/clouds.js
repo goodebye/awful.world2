@@ -10,7 +10,6 @@ class Cloud {
 
   update() {
     let dampening = -.025;
-      console.log(pwinMouseX, winMouseX, "hm");
     this.pos.add(createVector((winMouseX - pwinMouseX) * dampening, (winMouseY - pwinMouseY) * dampening));
 
   }
@@ -34,7 +33,6 @@ class Cloud {
   isTimeToDie() {
      if (this.traveled.x > width + this.img.width * this.scale 
          && this.traveled.y > height + this.img.height * this.scale) {
-         console.log("bye bitch!");
          return true;
      }
      return false;

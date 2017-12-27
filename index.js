@@ -289,7 +289,7 @@ app.get('/post/:post_id/delete', isLoggedIn, function(req, res) {
 });
 
 app.get('/edit-profile', isLoggedIn, function(req, res) {
-    res.render('edit-profile', { user: req.user, editorProfile: req.user.profile.replace(/<\/script/ig, "<\\\/script")});    
+    res.render('edit-profile', { user: req.user });    
 });
 
 app.get('/api/profile/:user_id', function(req, res) {
