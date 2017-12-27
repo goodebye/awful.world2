@@ -26,8 +26,32 @@
         <script>
             var editor = ace.edit("editor");
             //editor.setTheme("ace/theme/monokai");
-            editor.setValue(`{{{editorProfile}}}`);
             editor.getSession().setMode("ace/mode/html");
+
+            fetch('/api/profile/{{user._id}}').then(function(res) {
+                if (res.status !== 200) {
+                    // error
+                    editor.setValue('res not 200: there was an error finding ur post. refresh or tweet at us ok?')
+                }
+                else {
+                    res.json().then(function(data) {
+                        if (data.success) {
+                            console.log(data);
+                             editor.setValue(data.profile);
+                            updatePreview();
+                        }
+                        else {
+                            console.log(":(");
+                        }
+                    });
+                
+                }
+            }).catch(function(err) {
+                editor.setValue('there was an error finding ur post. refresh or tweet at us ok?');
+            });
+                
+
+
 
            function updatePreview() {
                console.log("hey");
@@ -111,7 +135,6 @@
                 form.submit();
             }
 
-            updatePreview();
         </script>
     </body>
 </html>

@@ -175,8 +175,7 @@ app.get('/post/:post_id', isLoggedIn, function(req, res) {
      }
      if (post.user_id == req.user._id) {
          console.log(post.post);
-        const editorPost = post.post.replace(/<\/script/ig, "<\\\/script");    
-        res.render('create-post', { post, editorPost});
+        res.render('create-post', { post });
      }
      else {
          // TODO: make this case, in which the user tries to edit someone else's post, better
@@ -291,6 +290,17 @@ app.get('/post/:post_id/delete', isLoggedIn, function(req, res) {
 
 app.get('/edit-profile', isLoggedIn, function(req, res) {
     res.render('edit-profile', { user: req.user, editorProfile: req.user.profile.replace(/<\/script/ig, "<\\\/script")});    
+});
+
+app.get('/api/profile/:user_id', function(req, res) {
+    User.findById(req.params.user_id, function(err, user) {
+        if (err) {
+            res.json({success: false});
+        }
+        else {
+            res.json({ success: true, profile: user.profile });
+        }
+    });
 });
 
 app.post('/edit-profile', isLoggedIn, function(req, res) {
