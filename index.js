@@ -353,6 +353,7 @@ app.get('/post/:post_id/report', function(req, res) {
 
 app.get('/:username/:_id', function(req, res) {
     Post.findOne({_id: req.params._id}).exec(function (err, post) {
+        console.log(post);
         if (!err) {
             res.render('view-post', post);
         }

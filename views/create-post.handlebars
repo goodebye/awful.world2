@@ -39,27 +39,32 @@
                     res.json().then(function(data) {
                         if (data.success) {
                              editor.setValue(data.post);
-                            console.log(data.post);
-                             updatePreviewWithString(data.post);
+                             updatePreview(data.post);
                         }
                     });
                 }
             }).catch(function(err) {
-                console.log(err, "um");
                 editor.setValue('there was an error finding ur post. refresh or tweet at us ok?');
             });
                 
 
            function updatePreview() {
-                document.getElementById('preview-iframe').srcdoc = editor.getValue();
+                document.getElementById('preview-iframe').srcdoc = wrapPostInStuff(editor.getValue());
            }
 
-            function updatePreviewWithString(htmlString) {
-                document.getElementById('preview-iframe').srcdoc = htmlString;
+           function wrapPostInStuff(postHTML) {
+                return `<html>
+                    <head>
+                    </head>
+                    <body>
+                        <div id="{{post._id}}">
+                           ${postHTML}
+                        </div>
+                    </body>
+                </html>`
             }
 
            function toggleEditor() {
-                console.log("hi");
                 if (document.getElementById("left-half").style.display == "none") {
                     document.getElementById("left-half").style.display = "initial";
                     // document.getElementById("toggle-visibility").innerHTML = "<";
