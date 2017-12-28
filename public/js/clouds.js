@@ -4,14 +4,13 @@ class Cloud {
     this.pos = createVector(x, y);
     this.vel = randomReasonableSpeed();
     this.rot = Math.random() * TWO_PI;
-    this.scale = Math.random() + .8;
+    this.scale = Math.random() * 1.3 + 0.8;
     this.traveled = createVector(0, 0);
   }
 
   update() {
-    let dampening = -.025;
+    const dampening = -0.025;
     this.pos.add(createVector((winMouseX - pwinMouseX) * dampening, (winMouseY - pwinMouseY) * dampening));
-
   }
 
 
@@ -22,52 +21,51 @@ class Cloud {
   }
 
   draw() {
-      push();
-      translate(this.pos.x, this.pos.y);
-      scale(this.scale);
-      image(this.img, 0, 0);
-      noTint();
-      pop();
+    push();
+    translate(this.pos.x, this.pos.y);
+    scale(this.scale);
+    image(this.img, 0, 0);
+    pop();
   }
 
   isTimeToDie() {
-     if (this.traveled.x > width + this.img.width * this.scale 
+    if (this.traveled.x > width + this.img.width * this.scale
          && this.traveled.y > height + this.img.height * this.scale) {
-         return true;
-     }
-     return false;
+      return true;
+    }
+    return false;
   }
 }
 
 class Sun {
-    constructor(x, y) {
-      this.pos = createVector(x, y);
-      this.img = loadImage("/js/clouds/sun.png");
-      this.rot = Math.random() * TWO_PI;
-      this.scale = 2;
-      this.rotSpeed = 0.001;
-    }
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.img = loadImage('/js/clouds/sun.png');
+    this.rot = Math.random() * TWO_PI;
+    this.scale = 2;
+    this.rotSpeed = 0.001;
+  }
 
-    update() {
-      let wob = randomWobble();
-      this.pos.add(wob);
-      this.rot = (this.rot + this.rotSpeed) % TWO_PI;
+  update() {
+    const wob = randomWobble();
+    this.pos.add(wob);
+    this.rot = (this.rot + this.rotSpeed) % TWO_PI;
 
-    let dampening = -.02;
+    const dampening = -0.02;
     this.pos.add(createVector((winMouseX - pwinMouseX) * dampening, (winMouseY - pwinMouseY) * dampening));
-    } 
+  }
 
-    draw() {
-      //let wob = randomWobble();
+  draw() {
+    // let wob = randomWobble();
 
-      push();
-      translate(this.pos.x, this.pos.y);
-      scale(this.scale);
-      rotate(this.rot);
-      //image(this.img, 0 + wob.x, 0 + wob.y);     
-      image(this.img, 0, 0);     
-      pop();
-    }
+    push();
+    translate(this.pos.x, this.pos.y);
+    scale(this.scale);
+    rotate(this.rot);
+    // image(this.img, 0 + wob.x, 0 + wob.y);
+    image(this.img, 0, 0);
+    pop();
+  }
 }
 
 class CloudGenerator {
@@ -77,43 +75,43 @@ class CloudGenerator {
     this.init();
   }
   init() {
-    //cover the screen;
-    for (let i = 0; i < 40; i++) {
+    // cover the screen;
+    for (let i = 0; i < 10; i++) {
       clouds.push(new Cloud(Math.random() * width, Math.random() * height));
     }
   }
   update() {
     if (frameCount >= this.lastFrame + this.framesTilCloud) {
       if (clouds.length < 100) {
-          let cloudTotal = Math.floor(Math.random() * 1.2 + 1);
+        const cloudTotal = Math.floor(Math.random() * 2 + 1);
 
-          for (let i = 0; i < cloudTotal; i++) {
-            clouds.push(new Cloud(-500, Math.random() * windowHeight));
-          }
+        for (let i = 0; i < cloudTotal; i++) {
+          clouds.push(new Cloud(-500, Math.random() * windowHeight));
+        }
       }
       this.lastFrame = frameCount;
       this.framesTilCloud = this.nextCloudDrop();
     }
   }
   nextCloudDrop() {
-      return Math.floor(Math.random() * 60 + 40);
+    return Math.floor(Math.random() * 160 + 40);
   }
 }
 
 function randomWobble() {
-  let scale = 1.2;
+  const scale = 1.2;
   return createVector(((Math.random() * 2) - 1) * scale, ((Math.random() * 2) - 1) * scale);
 }
 
 function randomReasonableSpeed() {
-    let scale = 3;
+  const scale = 3;
   return createVector(Math.random() * scale, Math.random() * scale);
 }
 
 clouds = [];
 
 function setup() {
-  wind = createVector(1); 
+  wind = createVector(1);
   sun = new Sun(windowWidth / 3, windowHeight / 3);
   cloud = new Cloud(windowWidth / 3, windowHeight / 3);
   const myCanvas = createCanvas(windowWidth, windowHeight);
@@ -123,24 +121,23 @@ function setup() {
 }
 
 function draw() {
-    clear();
-    imageMode(CENTER);
-    sun.update();
-    sun.draw();
+  clear();
+  imageMode(CENTER);
+  sun.update();
+  sun.draw();
 
-    cloudGen1.update();
+  cloudGen1.update();
 
-    let i = clouds.length;
+  let i = clouds.length;
 
-    while (i--) {
-        clouds[i].update();
-        clouds[i].addWind(wind);
-        clouds[i].draw();
+  while (i--) {
+    clouds[i].update();
+    clouds[i].addWind(wind);
+    clouds[i].draw();
 
-        if (clouds[i].isTimeToDie()) {
-          clouds.splice(i, 1);
-        }
-
+    if (clouds[i].isTimeToDie()) {
+      clouds.splice(i, 1);
     }
+  }
 }
 
